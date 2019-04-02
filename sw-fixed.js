@@ -2,12 +2,7 @@ self.addEventListener('install', function(e) {
 	e.waitUntil(
 		caches.open('wordpress').then(function(cache) {
 			return cache.addAll([
-				'wp-login.php',
-				'wp-config.php',
-				'wp-includes',
-				'wp-admin',
-				'wp-content',
-				'wp-content/themes/twentynineteen/index.php'
+				''
       ]);
 		})
   );
