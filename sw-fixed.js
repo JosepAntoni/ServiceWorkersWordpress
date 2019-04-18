@@ -1,8 +1,6 @@
-var cacheBuster = 'CACHE_BUSTER';
-
 self.addEventListener('install', function(event) {
 	event.waitUntil(
-		caches.open('wordpress').then(function(cache) {
+		caches.open('wordpress-fixed').then(function(cache) {
 			return cache.addAll([
 				'/wordpress/',
 				'/wordpress/wp-content/themes/twentynineteen/print.css',
@@ -11,7 +9,6 @@ self.addEventListener('install', function(event) {
 				'/wordpress/wp-includes/css/dist/block-library/theme.min.css',
 				'/wordpress/wp-includes/js/wp-embed.min.js',
 				'/wordpress/wp-includes/js/wp-emoji-release.min.js',
-				//'favicon.ico',
 				'/wordpress/offline.html'
       ]);
 		})
@@ -20,7 +17,8 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-	console.log(event.request.url);
+	//console.log(event.request.url);
+	console.log(caches.has('wordpress-fixed'));
 	var request = event.request;
 	if (event.request.url.match('wp-admin/') || event.request.url.match('preview=true')) {
 		console.log('Admin');
@@ -30,6 +28,7 @@ self.addEventListener('fetch', function(event) {
 		fetch(request)
 			.then(function (response) {
 				// NETWORK
+				//console.log(response);
 				return response;
 			})
 			.catch(function () {
