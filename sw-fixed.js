@@ -1,11 +1,18 @@
 var cacheBuster = 'CACHE_BUSTER';
 
-self.addEventListener('install', function(e) {
-	e.waitUntil(
+self.addEventListener('install', function(event) {
+	event.waitUntil(
 		caches.open('wordpress').then(function(cache) {
 			return cache.addAll([
-				'/',
-				'offline.html'
+				'/wordpress/',
+				'/wordpress/wp-content/themes/twentynineteen/print.css',
+				'/wordpress/wp-content/themes/twentynineteen/style.css',
+				'/wordpress/wp-includes/css/dist/block-library/style.min.css',
+				'/wordpress/wp-includes/css/dist/block-library/theme.min.css',
+				'/wordpress/wp-includes/js/wp-embed.min.js',
+				'/wordpress/wp-includes/js/wp-emoji-release.min.js',
+				//'favicon.ico',
+				'/wordpress/offline.html'
       ]);
 		})
   );
@@ -13,14 +20,24 @@ self.addEventListener('install', function(e) {
 });
 
 self.addEventListener('fetch', function(event) {
-	console.log('Enters');
+	console.log(event.request.url);
+	var request = event.request;
 	if (event.request.url.match('wp-admin/') || event.request.url.match('preview=true')) {
 		console.log('Admin');
 		return;
 	}
 	event.respondWith(
-		caches.match(event.request).then(function(response) {
-			return response || fetch(event.request);
-		})
+		fetch(request)
+			.then(function (response) {
+				// NETWORK
+				return response;
+			})
+			.catch(function () {
+				// CACHE or FALLBACK
+				return caches.match(request)
+					.then(function (response) {
+						return response || caches.match('/wordpress/offline.html');
+					})
+			})
 	);
 });

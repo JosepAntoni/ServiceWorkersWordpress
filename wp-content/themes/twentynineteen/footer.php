@@ -57,8 +57,8 @@
 <script>
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
-           .register('sw-free.js')
-           .then(function() { console.log("Service Worker Free Registered"); });
+           .register('sw-fixed.js')
+           .then(function() { console.log("Service Worker Fixed Registered"); });
 }
 </script>
 </html>
