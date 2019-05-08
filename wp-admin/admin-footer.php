@@ -62,13 +62,6 @@ global $hook_suffix;
 	</p>
 	<div class="clear"></div>
 </div>
-<!--<script>
-	if('serviceWorker' in navigator) {
-		navigator.serviceWorker
-			.register('sw-logged.js')
-			.then(function() { console.log("Service Worker Logged Registered"); });
-	}
-</script>-->
 <?php
 /**
  * Prints scripts or data before the default footer scripts.

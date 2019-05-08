@@ -54,11 +54,4 @@
 <?php wp_footer(); ?>
 
 </body>
-<script>
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker
-           .register('sw-fixed.js')
-           .then(function() { console.log("Service Worker Incremental Registered"); });
-}
-</script>
 </html>
